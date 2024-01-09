@@ -104,13 +104,13 @@ public class DriverProvider {
         System.setProperty("webdriver.chrome.driver", Paths.get("").toAbsolutePath() + "/drivers/"+driverExe);
 
         // Create a new instance of the ChromeDriver
-        WebDriver driver = new ChromeDriver(chromeOptions);
+        WebDriver webDriver = new ChromeDriver(chromeOptions);
 
-        return driver;
+        return webDriver;
     }
     public static WebDriver getDriver_Remote() throws MalformedURLException {
 
-            switch (getCurrentBrowserNameFromConfig()) {
+            switch (getBrowserConfiguration()) {
                 case "chrome_headless":
                     instance.set(getChrome_Remote(true));
                     LOGGER.info("Init Chrome driver in headless mode");
@@ -127,23 +127,24 @@ public class DriverProvider {
     }
 
     public static WebDriver getDriver_Local() throws MalformedURLException {
-        switch (getCurrentBrowserNameFromConfig()) {
+        LOGGER.info("Local chrome driver chosen");
+        switch (getBrowserConfiguration()) {
             case "chrome_headless":
-                instance.set(getChrome_Local(true, "chromedrivedrrr.exe"));
-                LOGGER.info("Init Chrome driver in headless mode");
+                instance.set(getChrome_Local(true, "chromedriver.exe"));
+                LOGGER.info("Chrome driver set in headless mode");
                 break;
 
             default:
-                //LOGGER.info("Init Chrome driver");
-                instance.set(getChrome_Local(false, "chromedrivedrrr.exe"));
+                instance.set(getChrome_Local(false, "chromedriver.exe"));
+                LOGGER.info("Chrome driver set in visible mode");
 
         }
 
         //maximizeWindow(instance);
-        return getChrome_Local(false, "chromedrivedrrr.exe");
+        return getChrome_Local(false, "chromedriver.exe");
     }
 
-    private static String getCurrentBrowserNameFromConfig() {
+    private static String getBrowserConfiguration() {
         return Config.getConfigProperty("browser");
     }
 
