@@ -1,5 +1,6 @@
 package utils.dataProcessing;
 
+import Pages.BasePage;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -21,6 +22,12 @@ public class FilesProcessing {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return Paths.get(file.getAbsolutePath());
+    }
+
+    public static Path takeScreenshot() {
+        File file = ((TakesScreenshot) BasePage.getWebDriver()).getScreenshotAs(OutputType.FILE);
+
         return Paths.get(file.getAbsolutePath());
     }
 }
