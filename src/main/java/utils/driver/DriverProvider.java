@@ -4,9 +4,12 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testng.annotations.DataProvider;
 import utils.config.Config;
 
@@ -24,6 +27,8 @@ public class DriverProvider {
     private static String downloadFilepath = Paths.get("").toAbsolutePath() + "\\target\\";
     public static ThreadLocal<WebDriver> instance = new ThreadLocal<WebDriver>();
     private static WebDriver outputDriver;
+
+    public static BrowserWebDriverContainer<?> chromeDocker;
 
     public static WebDriver getDriver(String driverSource) throws MalformedURLException {
         switch (driverSource){
@@ -142,6 +147,23 @@ public class DriverProvider {
 
         //maximizeWindow(instance);
         return getChrome_Local(false, "chromedriver.exe");
+    }
+
+    static public RemoteWebDriver getWebDriverDocker_Chrome(){
+        LoggingPreferences logPrefs = new LoggingPreferences();
+        logPrefs.enable(LogType.BROWSER, Level.OFF);
+
+        Map<String, Object> preferences = new Hashtable<>();
+
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeDocker = new BrowserWebDriverContainer<>()
+                .withExposedPorts(8081, 8082)
+                .withCapabilities(chromeOptions);
+
+        chromeDocker.start();
+
+        return chromeDocker.getWebDriver();
+
     }
 
     private static String getBrowserConfiguration() {
