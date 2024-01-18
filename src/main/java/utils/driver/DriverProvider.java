@@ -28,7 +28,7 @@ public class DriverProvider {
     public static ThreadLocal<WebDriver> instance = new ThreadLocal<WebDriver>();
     private static WebDriver outputDriver;
 
-    public static BrowserWebDriverContainer<?> chromeDocker;
+    public static BrowserWebDriverContainer<?> webDriverDocker;
 
     public static WebDriver getDriver(String driverSource) throws MalformedURLException {
         switch (driverSource){
@@ -136,12 +136,12 @@ public class DriverProvider {
         switch (getBrowserConfiguration()) {
             case "chrome_headless":
                 instance.set(getChrome_Local(true, "chromedriver.exe"));
-                LOGGER.info("Chrome driver set in headless mode");
+                LOGGER.info("Chrome driver in headless mode");
                 break;
 
             default:
                 instance.set(getChrome_Local(false, "chromedriver.exe"));
-                LOGGER.info("Chrome driver set in visible mode");
+                LOGGER.info("Chrome driver in visible mode");
 
         }
 
@@ -156,13 +156,13 @@ public class DriverProvider {
         Map<String, Object> preferences = new Hashtable<>();
 
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeDocker = new BrowserWebDriverContainer<>()
-                .withExposedPorts(8081, 8082)
+        webDriverDocker = new BrowserWebDriverContainer<>()
+                .withExposedPorts(8080, 8081)
                 .withCapabilities(chromeOptions);
 
-        chromeDocker.start();
+        webDriverDocker.start();
 
-        return chromeDocker.getWebDriver();
+        return webDriverDocker.getWebDriver();
 
     }
 
