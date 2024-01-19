@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import utils.auth.Auth;
 import utils.baseTest.BaseTest_E2E;
 
-public class TC001_LoginFromHomePage extends BaseTest_E2E {
+public class TCE001_LoginFromHomePage extends BaseTest_E2E {
     @Records(
             creator = "Eugene Dolbik",
             creationDate = "01/01/2024",
@@ -15,7 +15,7 @@ public class TC001_LoginFromHomePage extends BaseTest_E2E {
     )
 
     @Test
-    public void TC001_LoginFromHomePage(){
+    public void TCE001_LoginFromHomePage(){
         String username = Auth.getDefaultUsername();
         String password = Auth.getDefaultPassword();
 

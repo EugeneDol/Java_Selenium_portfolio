@@ -30,13 +30,10 @@ public class BaseTest_E2E extends BaseTest{
     public void closeRun_e2e(ITestResult testResult) {
         try {
             clearData();
-            BasePage.getWebDriver().quit();
-            DriverProvider.closeDriver();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
             if(BasePage.webDriver != null) BasePage.getWebDriver().quit();
             if(DriverProvider.instance.get() != null) DriverProvider.closeDriver();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
