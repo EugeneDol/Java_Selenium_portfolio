@@ -5,11 +5,15 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import utils.driver.DriverProvider;
+import utils.reports.E2EListener;
 
 import java.net.MalformedURLException;
 
 
+
+@Listeners({E2EListener.class})
 public class BaseTest_E2E extends BaseTest{
     private static BasePage basePage = new BasePage();
     private static String testClassName;
