@@ -1,8 +1,8 @@
 package utils.baseTest;
 
 import org.testng.ITestContext;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import utils.api.ApiController;
 
 import java.net.MalformedURLException;
 
@@ -10,21 +10,29 @@ import java.net.MalformedURLException;
 public class BaseTest_API extends BaseTest{
 
     private static String testClassName;
-    private ApiController apiHandler;
 
 
     @BeforeMethod
     public void testSetUp_api(ITestContext context) throws MalformedURLException {
         testClassName = context.getCurrentXmlTest().getXmlClasses().get(0).getName();
         LOGGER.info("API test started: " + testClassName);
-        apiHandler = new ApiController();
-        String token = apiHandler.getAuthToken("defaultUsername", "defaultPass");
-        LOGGER.info("Auth token: " + token);
+        completePreconditions();
     }
+
+    @AfterMethod
+    public void closeRun_api(){
+        completePostconditions();
+    }
+
+    /**
+     * empty method for override
+     * complete specific actions before test actions
+     * */
+    protected void completePreconditions() { }
 
     /**
      * empty method for override
      * put test specific clear actions at the end of the test
      * */
-    protected void clearData() { }
+    protected void completePostconditions() { }
 }

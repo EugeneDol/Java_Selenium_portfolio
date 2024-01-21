@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class Config extends ReadProperties {
     private static String PROPERTIES_PATH = "src/main/resources/configs/default.properties";
-    private static String CREDENTIALS_FILE = "src/main/resources/credentials.properties";
+    private static String CREDENTIALS_FILE = "src/main/resources/users.properties";
 
     public static String getConfigProperty(String fieldName) {
         return getProperty(PROPERTIES_PATH, fieldName);

@@ -13,4 +13,12 @@ public class ApiRequestBuilder {
     public static Headers getRequestHeader_auth(String token){
         return new Headers(new Header("Authorization", "Bearer " + token));
     }
+
+    public static String getRequestBody_addUser(String email, String password, String name, String lastname){
+        return "{\"firstName\": \"" + name + "\", \"lastName\": \"" + lastname + "\", \"email\": \"" + email + "\", \"password\": \"" + password + "\"}";
+    }
+
+    public static String getRequestBody_empty(){
+        return "{}";
+    }
 }

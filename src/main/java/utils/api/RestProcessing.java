@@ -52,8 +52,16 @@ public class RestProcessing {
         LOGGER.info("Send get request at endpoint: " + endpoint + " with headers: " + header);
         Response response = given()
                 .headers(header)
-                //.header("Authorization", "Bearer " + token)
                 .get(endpoint);
+
+        return response;
+    }
+
+    public static Response sendDeleteReq(String endpoint, Headers header){
+        LOGGER.info("Send get request at endpoint: " + endpoint + " with headers: " + header);
+        Response response = given()
+                .headers(header)
+                .delete(endpoint);
 
         return response;
     }
