@@ -9,7 +9,7 @@ import static utils.auth.Auth.getCredByName;
 
 
 public class BaseTest {
-    static final Logger LOGGER = LoggerFactory.getLogger(Config.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(Config.class);
     public static SoftAssert soft = new SoftAssert();
     public static String defaultPass = getCredByName("defaultPass");
 

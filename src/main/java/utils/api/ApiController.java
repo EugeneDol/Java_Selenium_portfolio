@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import utils.api.json.ApiRequestBuilder;
 import utils.api.json.JsonParser;
 import utils.auth.Auth;
+import utils.reports.AllureHandler;
 
 
 public class ApiController {
@@ -61,7 +62,6 @@ public class ApiController {
 
     public static User addUser_val(String email, String password, String name, String lastname){
         LOGGER.info("Add user with email: " + email);
-
         String requestBody_addUser = ApiRequestBuilder.getRequestBody_addUser(email, password, name, lastname);
         Response responseUser = restProcessing.sendPostReq(addUserEndpoint, requestBody_addUser);
         User createdUser = new Gson().fromJson(responseUser.jsonPath().get("user").toString(), User.class);
@@ -82,6 +82,7 @@ public class ApiController {
     }
 
     public static void deleteUser(String usernameProp, String passwordProp){
+        LOGGER.info("Delete user by username prop: " + usernameProp);
         String token = getAuthToken(usernameProp,passwordProp);
 
         Headers requestHeader_auth = ApiRequestBuilder.getRequestHeader_auth(token);

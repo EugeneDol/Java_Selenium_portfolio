@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="LoginFuncSuite">
+
+    <test thread-count="5" name="Tests">
+        <classes>
+            <class name="API.auth.TCA001_AuthViaApi"/>
+        </classes>
+    </test>
+</suite>

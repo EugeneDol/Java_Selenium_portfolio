@@ -1,4 +1,4 @@
-package API.auth;
+package API.userProcessing;
 
 import annotations.Records;
 import obj.User;
@@ -6,11 +6,14 @@ import org.testng.annotations.Test;
 import utils.api.ApiController;
 import utils.auth.Auth;
 import utils.baseTest.BaseTest_API;
+import utils.reports.AllureHandler;
 
 import static org.testng.Assert.assertEquals;
 
 public class TCA002_AddUserViaApi extends BaseTest_API {
     private User newUser;
+    private String newUserEmail;
+    private String newUserName;
     private String propNewUserEmail;
     private String propNewUserName;
 
@@ -22,6 +25,7 @@ public class TCA002_AddUserViaApi extends BaseTest_API {
     )
 
     public void completePreconditions(){
+        LOGGER.info("Preconditions: get data from prop");
         propNewUserEmail = Auth.getCredByName("newUserEmail");
         propNewUserName = Auth.getCredByName("newUserName");
 
@@ -29,14 +33,19 @@ public class TCA002_AddUserViaApi extends BaseTest_API {
 
     @Test
     public void TCA002_AddUserViaApi(){
+        LOGGER.info("Step #1: create new user");
         newUser = ApiController.addUser_prop("newUserEmail", "defaultPass", "newUserName", "newUserLastname");
+        newUserEmail = newUser.getEmail();
+        newUserName = newUser.getFirstName();
 
-        assertEquals(newUser.getEmail(), propNewUserEmail, "Received email is different from the expected");
-        soft.assertEquals(newUser.getFirstName(), propNewUserName, "Received email is different from the expected");
+        LOGGER.info("Step #1: validate new user data");
+        assertEquals(newUserEmail, propNewUserEmail, "Received email is different from the expected");
+        soft.assertEquals(newUserName, propNewUserName, "Received email is different from the expected");
         soft.assertAll();
     }
 
     public void completePostconditions(){
+        LOGGER.info("CleanUp: delete created user");
         ApiController.deleteUser("newUserEmail", "defaultPass");
     }
 }

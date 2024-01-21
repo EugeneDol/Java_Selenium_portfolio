@@ -1,6 +1,7 @@
 package utils.reports;
 
 import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import utils.dataProcessing.FilesProcessing;
 
 import java.io.IOException;
@@ -14,5 +15,9 @@ public class AllureHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Step("{message}")
+    public static void logStep(String message) {
     }
 }
