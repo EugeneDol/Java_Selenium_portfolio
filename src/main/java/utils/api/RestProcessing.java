@@ -2,10 +2,10 @@ package utils.api;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.auth.Auth;
 import utils.config.Config;
 
 import static io.restassured.RestAssured.given;
@@ -21,28 +21,47 @@ public class RestProcessing {
         RestAssured.baseURI = serviceUrl;
     }
 
-    public static String getAuthToken(String usernameProp, String passwordProp){
-        String username = Auth.getCredByName(usernameProp);
-        String password = Auth.getCredByName(passwordProp);
-        LOGGER.info("Get auth token for credentials: " + username + " " + password);
+    public static Response sendPostReq(String endpoint, String body){
 
-        String requestBody_auth = "{\"email\": \"" + username + "\", \"password\": \"" + password + "\"}";
-        Response responseAuth = given()
-                .contentType(ContentType.JSON)
-                .body(requestBody_auth)
-                .when()
-                .post(authEndpoint);
+        LOGGER.info("Send post request at endpoint: " + endpoint  + "\nwith body: " + body);
+        Response response = given()
+                    .contentType(ContentType.JSON)
+                    .body(body)
+                    .when()
+                    .post(endpoint);
 
-        token = responseAuth.jsonPath().getString("token");
 
-        return token;
+        return response;
     }
 
-    public static Response sendGetReq(String url){
-        LOGGER.info("Send get request at endpoint: " + url);
+    public static Response sendPostReq(String endpoint, String body, Headers header){
+
+        LOGGER.info("Send post request at endpoint: " + endpoint + "\nwith headers: " + header + "\nwith body: " + body);
         Response response = given()
-                .header("Authorization", "Bearer " + token)
-                .get(url);
+                .contentType(ContentType.JSON)
+                .headers(header)
+                .body(body)
+                .when()
+                .post(endpoint);
+
+
+        return response;
+    }
+
+    public static Response sendGetReq(String endpoint, Headers header){
+        LOGGER.info("Send get request at endpoint: " + endpoint + " with headers: " + header);
+        Response response = given()
+                .headers(header)
+                .get(endpoint);
+
+        return response;
+    }
+
+    public static Response sendDeleteReq(String endpoint, Headers header){
+        LOGGER.info("Send get request at endpoint: " + endpoint + " with headers: " + header);
+        Response response = given()
+                .headers(header)
+                .delete(endpoint);
 
         return response;
     }

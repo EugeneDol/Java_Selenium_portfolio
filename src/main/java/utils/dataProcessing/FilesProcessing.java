@@ -13,7 +13,6 @@ import java.nio.file.Paths;
 
 public class FilesProcessing {
     static String report_folder = Paths.get("").toAbsolutePath() + "/src/main/resources/testReports/";
-
     public static Path takeScreenshot(WebDriver driver, String name) {
         File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         String filename = name + "screen.png";

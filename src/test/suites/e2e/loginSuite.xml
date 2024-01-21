@@ -3,7 +3,7 @@
 
     <test thread-count="5" name="Tests">
         <classes>
-            <class name="E2E.TC001_LoginFromHomePage"/>
+            <class name="E2E.TCE001_LoginFromHomePage"/>
         </classes>
     </test>
 </suite>
