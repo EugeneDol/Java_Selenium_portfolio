@@ -4,9 +4,12 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testng.annotations.DataProvider;
 import utils.config.Config;
 
@@ -24,6 +27,8 @@ public class DriverProvider {
     private static String downloadFilepath = Paths.get("").toAbsolutePath() + "\\target\\";
     public static ThreadLocal<WebDriver> instance = new ThreadLocal<WebDriver>();
     private static WebDriver outputDriver;
+
+    public static BrowserWebDriverContainer<?> webDriverDocker;
 
     public static WebDriver getDriver(String driverSource) throws MalformedURLException {
         switch (driverSource){
@@ -131,17 +136,34 @@ public class DriverProvider {
         switch (getBrowserConfiguration()) {
             case "chrome_headless":
                 instance.set(getChrome_Local(true, "chromedriver.exe"));
-                LOGGER.info("Chrome driver set in headless mode");
+                LOGGER.info("Chrome driver in headless mode");
                 break;
 
             default:
                 instance.set(getChrome_Local(false, "chromedriver.exe"));
-                LOGGER.info("Chrome driver set in visible mode");
+                LOGGER.info("Chrome driver in visible mode");
 
         }
 
         //maximizeWindow(instance);
         return (WebDriver)instance.get();
+    }
+
+    static public RemoteWebDriver getWebDriverDocker_Chrome(){
+        LoggingPreferences logPrefs = new LoggingPreferences();
+        logPrefs.enable(LogType.BROWSER, Level.OFF);
+
+        Map<String, Object> preferences = new Hashtable<>();
+
+        ChromeOptions chromeOptions = new ChromeOptions();
+        webDriverDocker = new BrowserWebDriverContainer<>()
+                .withExposedPorts(8080, 8081)
+                .withCapabilities(chromeOptions);
+
+        webDriverDocker.start();
+
+        return webDriverDocker.getWebDriver();
+
     }
 
     private static String getBrowserConfiguration() {
