@@ -23,7 +23,7 @@ public class BaseTest_E2E extends BaseTest{
     public void testSetUp_e2e(ITestContext context) throws MalformedURLException {
         testClassName = context.getCurrentXmlTest().getXmlClasses().get(0).getName();
         LOGGER.info("Test started: " + testClassName);
-        BasePage.webDriver.set(DriverProvider.getDriver("Remote"));
+        BasePage.webDriver.set(DriverProvider.getDriver("Local"));
     }
 
     @AfterMethod
@@ -31,7 +31,7 @@ public class BaseTest_E2E extends BaseTest{
         try {
             clearData();
             if(BasePage.webDriver != null) BasePage.getWebDriver().quit();
-            if(DriverProvider.instance.get() != null) DriverProvider.closeDriver();
+            //if(DriverProvider.instance.get() != null) DriverProvider.closeDriver();
         } catch (Exception e) {
             e.printStackTrace();
         }

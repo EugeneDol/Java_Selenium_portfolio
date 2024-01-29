@@ -27,7 +27,7 @@ public class DriverProvider {
 
     public static WebDriver getDriver(String driverSource) throws MalformedURLException {
         switch (driverSource){
-            case "local":
+            case "Local":
                 outputDriver = getDriver_Local();
                 break;
             case "Remote":
@@ -104,9 +104,9 @@ public class DriverProvider {
         System.setProperty("webdriver.chrome.driver", Paths.get("").toAbsolutePath() + "/drivers/"+driverExe);
 
         // Create a new instance of the ChromeDriver
-        WebDriver webDriver = new ChromeDriver(chromeOptions);
+        //WebDriver webDriver = new ChromeDriver(chromeOptions);
 
-        return webDriver;
+        return new ChromeDriver(chromeOptions);
     }
     public static WebDriver getDriver_Remote() throws MalformedURLException {
 
@@ -141,7 +141,7 @@ public class DriverProvider {
         }
 
         //maximizeWindow(instance);
-        return getChrome_Local(false, "chromedriver.exe");
+        return (WebDriver)instance.get();
     }
 
     private static String getBrowserConfiguration() {

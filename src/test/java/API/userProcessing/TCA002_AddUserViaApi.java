@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import utils.api.ApiController;
 import utils.auth.Auth;
 import utils.baseTest.BaseTest_API;
-import utils.reports.AllureHandler;
 
 import static org.testng.Assert.assertEquals;
 
@@ -26,15 +25,15 @@ public class TCA002_AddUserViaApi extends BaseTest_API {
 
     public void completePreconditions(){
         LOGGER.info("Preconditions: get data from prop");
-        propNewUserEmail = Auth.getCredByName("newUserEmail");
-        propNewUserName = Auth.getCredByName("newUserName");
+        propNewUserEmail = Auth.getCredByName("newUserEmail_API");
+        propNewUserName = Auth.getCredByName("newUserName_API");
 
     }
 
     @Test
     public void TCA002_AddUserViaApi(){
         LOGGER.info("Step #1: create new user");
-        newUser = ApiController.addUser_prop("newUserEmail", "defaultPass", "newUserName", "newUserLastname");
+        newUser = ApiController.addUser_prop("newUserEmail_API", "defaultPass", "newUserName_API", "newUserLastname_API");
         newUserEmail = newUser.getEmail();
         newUserName = newUser.getFirstName();
 
@@ -46,6 +45,6 @@ public class TCA002_AddUserViaApi extends BaseTest_API {
 
     public void completePostconditions(){
         LOGGER.info("CleanUp: delete created user");
-        ApiController.deleteUser("newUserEmail", "defaultPass");
+        ApiController.deleteUser("newUserEmail_API", "defaultPass");
     }
 }

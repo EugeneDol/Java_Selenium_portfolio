@@ -22,5 +22,6 @@ public class TCE001_LoginFromHomePage extends BaseTest_E2E {
         LoginPage loginPage = new LoginPage();
         loginPage.openPage();
         loginPage.login(username, password);
+        // TODO: 1/29/2024 - add validations
     }
 }

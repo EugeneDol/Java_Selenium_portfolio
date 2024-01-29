@@ -120,6 +120,7 @@ public class BasePage {
                 .perform();
     }
 
+    // TODO: 1/29/2024 - fix clearing
     public static void fillField(String value, By fieldXpath) {
         LOGGER.info("Insert \"" + value + "\" to the \"" + fieldXpath.toString() + "\" field");
         findElement(fieldXpath)

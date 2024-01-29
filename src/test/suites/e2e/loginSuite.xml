@@ -1,9 +1,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="LoginFuncSuite">
+<suite name="LoginFuncSuite" thread-count="6" parallel="tests" >
 
-    <test thread-count="5" name="Tests">
+    <test name="Login">
         <classes>
             <class name="E2E.TCE001_LoginFromHomePage"/>
+            <class name="E2E.TCE002_LoginWithWrongCredFromHomePage"/>
         </classes>
     </test>
 </suite>
